@@ -23,4 +23,4 @@ windows下markdown编辑器常用markdownpad, 随便搜索下载即可.
 ## 文件列表 ##
 - vs配置.md: VS的默认编码格式的设置(主要指VS2013将编码格式设置为UTF-8)
 - opencv配置.md: opencv的配置以及环境变量的配置
-
+- 编码规范.md: 编码规范, 花括号独占一行!
