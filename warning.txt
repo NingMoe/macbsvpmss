@@ -1,0 +1,29 @@
+# warning #
+
+## 0. 禁止事项 ##
+- 除了源码, 文档, 其余文件禁止往github上扔, 如果觉得有必要扔其他东西上github, 先到群上讨论
+- 禁止使用word, excel, ppt, 写文档用markdown, 大量文本数据用sql, 论文用tex
+- 禁止使用gb2312编码, 统一使用utf-8, 澳门地区可能使用big5, 所以本地化时额外讨论.
+
+## 1. 开发环境配置(必须) ##
+- IDE: VS2012或VS2013(MSVC11或MSVC12)
+    + 下载: 
+        - VS2012: http://pan.baidu.com/s/1bnizkz9 提取密码:dmvt
+        - VS2012 key: http://pan.baidu.com/s/1eQF3b5g
+        - VS2013(Ultimate 2013 with Update 4): http://www.visualstudio.com/en-us/downloads/
+            
+- OpenCV: OpenCV-2.4.9
+    + 下载: https://sourceforge.net/projects/opencvlibrary/files/opencv-win/2.4.9/opencv-2.4.9.exe/download
+
+- Github for Windows
+    + 下载: https://github-windows.s3.amazonaws.com/GitHubSetup.exe
+    + **需要在线安装, 安装时请保持网络通畅, 很可能被墙, 墙了请到群上寻求帮助**
+    + github客户端还可以使用msysgit(强烈不建议初学者使用) : https://github.com/msysgit/msysgit/releases/download/Git-1.9.5-preview20141217/Git-1.9.5-preview20141217.exe
+
+## 2. 开发环境(建议) ##
+- notepad++
+    + 用于文本查看与编辑, 文本编码转换等, 因为**禁止使用word, excel, ppt**
+- markdownpad
+    + 用于编辑和查看Markdown文件(.md)
+- total commander
+    + 简易教程: http://dengzuoheng.github.io/total-commander/
