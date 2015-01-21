@@ -20,3 +20,5 @@ path变量添加opencv\build\x86\vc12\bin和opencv\build\x64\vc12\bin, 如:
     C:\libs\opencv\opencv\build\x86\vc12\bin;
     C:\libs\opencv\opencv\build\x64\vc12\bin;
 
+Reference:  
+[1] GloryOfFamily. OpenCV2.4.9在Visual Studio 2013下的配置. http://blog.csdn.net/ccj5351/article/details/24949881
