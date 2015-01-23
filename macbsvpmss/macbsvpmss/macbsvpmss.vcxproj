@@ -80,7 +80,7 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <PropertyGroup>
-    <IncludePath>C:\libs\boost\boost_1_55_0\;C:\libs\WTL\WTL9.0\Include;$(IncludePath)</IncludePath>
+   
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
