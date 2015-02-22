@@ -10,6 +10,16 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="extrabackground.cpp" />
+    <ClCompile Include="extracontours.cpp" />
+    <ClCompile Include="extrafront.cpp" />
+    <ClCompile Include="macbsvpmss.cpp" />
+    <ClCompile Include="utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="macbsvpmss.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ADC04C9C-6E0C-4DC3-9C05-8EF749D2FC01}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
