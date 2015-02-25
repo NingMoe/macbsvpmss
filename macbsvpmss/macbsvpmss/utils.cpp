@@ -1,3 +1,8 @@
+/*
+	Otsu用于辅助生成背景二值化的阈值算法
+	Surendra用于迭代更新背景
+	这两个函数来自于高云晖师兄毕业设计
+*/
 #include "macbsvpmss.h"
 
 //前景提取的阈值算法
@@ -53,7 +58,7 @@ int Otsu(IplImage* src)
 	return threshold;  
 } 
 
-/* Surendra背景更新算法 */
+// Surendra背景更新算法
 void SurendraRenew(CvMat* bin, CvMat* frame, CvMat* background, CvMat* background_renew)
 {
 	/* 创建指向CvMat中每一个像素值的指针 */

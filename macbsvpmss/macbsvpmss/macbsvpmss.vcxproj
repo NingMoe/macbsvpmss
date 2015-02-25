@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="extrabackground.cpp" />
-    <ClCompile Include="extracontours.cpp" />
-    <ClCompile Include="extrafront.cpp" />
+    <ClCompile Include="extract_background.cpp" />
+    <ClCompile Include="extract_contours.cpp" />
+    <ClCompile Include="extract_front.cpp" />
     <ClCompile Include="macbsvpmss.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>

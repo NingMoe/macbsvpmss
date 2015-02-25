@@ -1,6 +1,12 @@
+/*
+	提取轮廓并用矩形圈出目标轮廓的函数
+	该函数有待扩展为连续帧轮廓的追踪
+*/
 #include "macbsvpmss.h"
 
-void extraContours(char input[]){
+//input代表背景图片的绝对路径字符串
+void ExtraContours(char input[])
+{
 	IplImage* test_gray = cvLoadImage(input,0);
 	//IplImage* test_gray = cvCreateImage(cvGetSize(test), IPL_DEPTH_8U, 1);
 	CvMemStorage *ms = cvCreateMemStorage();
@@ -8,11 +14,14 @@ void extraContours(char input[]){
 	cvNamedWindow("test");
 	cvShowImage("test",test_gray);
 	cvWaitKey(0);
-	int cnt = cvFindContours(test_gray,ms,&seq,sizeof(CvContour),2);// // //默认：mode=CV_RETR_LIST，检索所偶轮廓
+	//默认：mode=CV_RETR_LIST，检索所偶轮廓
+	int cnt = cvFindContours(test_gray,ms,&seq,sizeof(CvContour),2);
 	for(;seq;seq=seq->h_next)
 	{
-		int c=seq->total;//当前轮廓包含多少个元素，这里的元素为点
-		double length = cvArcLength(seq); //得到指定的那个轮廓的周长
+		//当前轮廓包含多少个元素，这里的元素为点
+		int c=seq->total;
+		 //得到指定的那个轮廓的周长
+		double length = cvArcLength(seq);
 		//该函数有3个参数：序列，起点（默认计算整条曲线），是否封闭曲线
 		double area = cvContourArea(seq);  //得到指定的那个轮廓的面积
 		CvRect rect = cvBoundingRect(seq,1);  //根据序列，返回轮廓外围矩形；
@@ -28,7 +37,7 @@ void extraContours(char input[]){
 		pt2.x=rect.x+rect.width;
 		pt2.y=rect.y+rect.height;
 
-		/*创建一个存储目标图像的内存*/
+		//创建一个存储目标图像的内存
 		IplImage *dst = cvCreateImage(cvGetSize(test_gray),8,3); //目标图像为3通道图
 		cvZero(dst);  
 		cvDrawContours(dst,seq,CV_RGB(255,255,255),CV_RGB(0,0,0),0);  

@@ -1,12 +1,15 @@
+/*
+	计算背景的函数，基本引用自高云晖师兄的毕业设计代码
+	计算公式：backImage = (1-learningRate)*background + learningRate*gray;
+*/
 #include "macbsvpmss.h"
 
-const int adj = 50;
-char savepath[] = "F:\\img_avg_gray_";
+const int g_adj = 50;
+char g_savepath[] = "F:\\img_avg_gray_";
 
-/*
-backImage = (1-learningRate)*background + learningRate*gray;
-*/
-IplImage* extractBackground(char input[],int k)
+//input[]代表视频的绝对路径字符串，k用于第K幅生成文件命名
+//返回值是IplIamge*存储类型的背景图
+IplImage* ExtractBackground(char input[],int k)
 {
 
 	/**********************************************************	
@@ -22,7 +25,7 @@ IplImage* extractBackground(char input[],int k)
 	CvMat* frame_grayMat = NULL;
 	CvMat* img_avgMat = NULL;
 	//所截取的帧的起始和终止位置，当所设定用于求平均的帧数较大时程序运行时间可能会较长
-	int start = adj;
+	int start = g_adj;
 	cvSetCaptureProperty(capture, CV_CAP_PROP_POS_FRAMES, start);	//将视频帧的位置调到所设的位置
 	int end = cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_COUNT) - adj;
 	int count = start;
@@ -64,7 +67,7 @@ IplImage* extractBackground(char input[],int k)
 	cvShowImage("img_avg_gray", img_avg);
 	//保存该灰度图 
 	char savename[50];
-	sprintf(savename, "%s%d%d%s%d%s", savepath, k,start, "_to_", end, ".png");
+	sprintf(savename, "%s%d%d%s%d%s", g_savepath, k,start, "_to_", end, ".png");
 	cvSaveImage(savename, img_avg);
 
 	cvWaitKey(0);	//按任意键结束程序

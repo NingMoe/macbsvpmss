@@ -18,16 +18,16 @@
     <ClCompile Include="macbsvpmss.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="extracontours.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="extrabackground.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="utils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="extrafront.cpp">
+    <ClCompile Include="extract_background.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="extract_contours.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="extract_front.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
