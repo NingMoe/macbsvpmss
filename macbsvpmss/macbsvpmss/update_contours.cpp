@@ -1,15 +1,15 @@
-/*���¸��ٵ��е�������Ӿ��Σ�ǰ��֡��ͬ����¸���֡����
-�¾��μ��뵽����ĩβ,src����һ֡�ľ��μ��ϣ�des�Ǹ��ٵ��еľ��μ���
+﻿/*更新跟踪当中的轮廓外接矩形：前后帧相同则更新跟踪帧数，
+新矩形加入到集合末尾,src是新一帧的矩形集合，des是跟踪当中的矩形集合
 */
 #include "macbsvpmss.h"
 #include <cmath>
 using namespace std;
-//�Զ�����������
+//自定义坐标类型
 struct center{
 	double x;
 	double y;
 };
-//���ڷ�����Ӿ������ĵĸ�������
+//用于返回外接矩形中心的辅助函数
 center GetCenter(CvRect rect)
 {
 	center point;

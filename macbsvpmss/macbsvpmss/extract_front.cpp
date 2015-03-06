@@ -1,40 +1,40 @@
 /*
-	¼ÆËã²î·ÖÍ¼Ïñ²¢¶şÖµ»¯µÄº¯Êı£¬ĞŞ¸Ä×Ô¸ßÔÆêÍÊ¦ĞÖµÄ±ÏÒµÉè¼Æ´úÂë
-	¸Ãº¯ÊıÔİÊ±ÎŞ·¨´¦Àí´óÊÓÆµ
+	è®¡ç®—å·®åˆ†å›¾åƒå¹¶äºŒå€¼åŒ–çš„å‡½æ•°ï¼Œä¿®æ”¹è‡ªé«˜äº‘æ™–å¸ˆå…„çš„æ¯•ä¸šè®¾è®¡ä»£ç 
+	è¯¥å‡½æ•°æš‚æ—¶æ— æ³•å¤„ç†å¤§è§†é¢‘
 */
 #include "macbsvpmss.h"
 
-//input[]´ú±íÊäÈëÊÓÆµµÄ¾ø¶ÔÂ·¾¶×Ö·û´®,back_img[]´ú±í±³¾°Í¼Æ¬µÄ¾ø¶ÔÂ·¾¶×Ö·û´®
+//input[]ä»£è¡¨è¾“å…¥è§†é¢‘çš„ç»å¯¹è·¯å¾„å­—ç¬¦ä¸²,back_img[]ä»£è¡¨èƒŒæ™¯å›¾ç‰‡çš„ç»å¯¹è·¯å¾„å­—ç¬¦ä¸²
 void ExtraFront(char input[],char back_img[])
 {
-	// ¶ÁÈë±³¾°£¨ÒÑ¾­Í¨¹ıÇóÆ½¾ù´¦ÀíºÃµÄ±³¾°»Ò¶ÈÍ¼£¬ÔËĞĞÊ±Èô¶ÁÈ¡Â·¾¶ÖĞÃ»¸ÃÃû³ÆµÄÍ¼ÏñÔò»á±¨´í£©
+	// è¯»å…¥èƒŒæ™¯ï¼ˆå·²ç»é€šè¿‡æ±‚å¹³å‡å¤„ç†å¥½çš„èƒŒæ™¯ç°åº¦å›¾ï¼Œè¿è¡Œæ—¶è‹¥è¯»å–è·¯å¾„ä¸­æ²¡è¯¥åç§°çš„å›¾åƒåˆ™ä¼šæŠ¥é”™ï¼‰
 	IplImage* background = cvLoadImage(back_img, 1);
-	// ´´½¨´æ´¢±³¾°»Ò¶ÈÍ¼µÄ±äÁ¿ 
+	// åˆ›å»ºå­˜å‚¨èƒŒæ™¯ç°åº¦å›¾çš„å˜é‡ 
 	IplImage* background_gray = cvCreateImage(cvGetSize(background), IPL_DEPTH_8U, 1);
-	// ½«±³¾°×ª³É»Ò¶ÈÍ¼ 
+	// å°†èƒŒæ™¯è½¬æˆç°åº¦å›¾ 
 	cvCvtColor(background, background_gray, CV_BGR2GRAY);
-	// ´´½¨´æ´¢¾ØÕó¸ñÊ½µÄ±³¾°»Ò¶ÈÍ¼µÄ±äÁ¿²¢½«³õÊ¼±³¾°×ª»¯Îª¾ØÕó¸ñÊ½ 
+	// åˆ›å»ºå­˜å‚¨çŸ©é˜µæ ¼å¼çš„èƒŒæ™¯ç°åº¦å›¾çš„å˜é‡å¹¶å°†åˆå§‹èƒŒæ™¯è½¬åŒ–ä¸ºçŸ©é˜µæ ¼å¼ 
 	CvMat* background_grayMat = cvCreateMat(background -> height, background -> width, CV_32FC1);
 	cvConvert(background_gray, background_grayMat);	
-	// ´´½¨ÓëÔ­±³¾°½øĞĞ¼ÓÈ¨µş¼ÓµÄ±³¾°¸üĞÂÍ¼ 
+	// åˆ›å»ºä¸åŸèƒŒæ™¯è¿›è¡ŒåŠ æƒå åŠ çš„èƒŒæ™¯æ›´æ–°å›¾ 
 	CvMat* background_renewMat = cvCreateMat(background -> height, background -> width, CV_32FC1);
-	// ´´½¨´æ´¢µ±Ç°Ö¡¼°Æä»Ò¶ÈÍ¼µÄ±äÁ¿ 
+	// åˆ›å»ºå­˜å‚¨å½“å‰å¸§åŠå…¶ç°åº¦å›¾çš„å˜é‡ 
 	IplImage* frame = NULL;
 	IplImage* frame_gray = NULL;
-	// ´´½¨ÖĞÖµÂË²¨ºóµÄµ±Ç°Ö¡»Ò¶ÈÍ¼ÒÔ¼°´æ´¢Æä¾ØÕó¸ñÊ½µÄ±äÁ¿ 
+	// åˆ›å»ºä¸­å€¼æ»¤æ³¢åçš„å½“å‰å¸§ç°åº¦å›¾ä»¥åŠå­˜å‚¨å…¶çŸ©é˜µæ ¼å¼çš„å˜é‡ 
 	IplImage* frame_median = NULL;
 	CvMat* frame_medianMat = NULL;
-	// ´´½¨´æ´¢Ç°¾°µÄ±äÁ¿ 
+	// åˆ›å»ºå­˜å‚¨å‰æ™¯çš„å˜é‡ 
 	IplImage* front = NULL;
 	CvMat* frontMat = NULL;
-	// ´´½¨´æ´¢¶şÖµ»¯ºóµÄÇ°¾°µÄ±äÁ¿ 
+	// åˆ›å»ºå­˜å‚¨äºŒå€¼åŒ–åçš„å‰æ™¯çš„å˜é‡ 
 	IplImage* front_bin = NULL;
 	CvMat* front_binMat = NULL;
-	// ¶ÁÈëÊÓÆµ²¢ÉèÖÃÊÓÆµÖ¡µ½½¨Á¢±³¾°ºóµÄÏÂÒ»Ö¡ 
+	// è¯»å…¥è§†é¢‘å¹¶è®¾ç½®è§†é¢‘å¸§åˆ°å»ºç«‹èƒŒæ™¯åçš„ä¸‹ä¸€å¸§ 
 	CvCapture* capture = cvCreateFileCapture(input);
-	int frame_count = 30;	//ÕâÀï¼ÙÉèÁËÓÃÇ°1000Ö¡Í¼Ïñ½øĞĞÇóÆ½¾ù´¦Àí×÷Îª±³¾°£¬ËùÒÔ¶ÔÓÚÊÓÆµÖ¡µÄÇ°¾°ÑÚÄ¤Êä³ö´ÓµÚ1001Ö¡¿ªÊ¼
+	int frame_count = 30;	//è¿™é‡Œå‡è®¾äº†ç”¨å‰1000å¸§å›¾åƒè¿›è¡Œæ±‚å¹³å‡å¤„ç†ä½œä¸ºèƒŒæ™¯ï¼Œæ‰€ä»¥å¯¹äºè§†é¢‘å¸§çš„å‰æ™¯æ©è†œè¾“å‡ºä»ç¬¬1001å¸§å¼€å§‹
 	cvSetCaptureProperty(capture, CV_CAP_PROP_POS_FRAMES, frame_count);
-	// ´´½¨ÏÔÊ¾ÊäÈëÒÔ¼°Êä³öµÄÊÓÆµµÄ´°¿Ú 
+	// åˆ›å»ºæ˜¾ç¤ºè¾“å…¥ä»¥åŠè¾“å‡ºçš„è§†é¢‘çš„çª—å£ 
 	cvNamedWindow("avi_input");
 	cvNamedWindow("avi_output");
 
@@ -45,23 +45,23 @@ void ExtraFront(char input[],char back_img[])
 	CvVideoWriter* wrVideo = cvCreateVideoWriter("F:\\vs2005\\out.avi", CV_FOURCC('X','V','I','D'), fps, size);
 	while(1)
 	{	
-		frame = cvQueryFrame(capture);	//¶ÁÈ¡µ±Ç°Ö¡		
+		frame = cvQueryFrame(capture);	//è¯»å–å½“å‰å¸§		
 
 		if (!frame)
 			break;
-		// ½«µ±Ç°Ö¡×ª»¯Îª»Ò¶ÈÍ¼	
+		// å°†å½“å‰å¸§è½¬åŒ–ä¸ºç°åº¦å›¾	
 		if (frame_gray == NULL)
 			frame_gray = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
 		cvCvtColor(frame, frame_gray, CV_BGR2GRAY);
-		// ¶Ôµ±Ç°Ö¡½øĞĞÖĞÖµÂË²¨ 
+		// å¯¹å½“å‰å¸§è¿›è¡Œä¸­å€¼æ»¤æ³¢ 
 		if (frame_median == NULL)
 		{
 			frame_median = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
 			frame_medianMat = cvCreateMat(frame -> height, frame -> width, CV_32FC1);
 		}
-		cvSmooth(frame_gray, frame_median, CV_MEDIAN);	//Ä¬ÈÏÎª3*3µÄÑÚÄ¤
+		cvSmooth(frame_gray, frame_median, CV_MEDIAN);	//é»˜è®¤ä¸º3*3çš„æ©è†œ
 		cvConvert(frame_median, frame_medianMat);
-		// ½øĞĞ¼õ¾°²Ù×÷µÃµ½Ç°¾° 
+		// è¿›è¡Œå‡æ™¯æ“ä½œå¾—åˆ°å‰æ™¯ 
 		if (front == NULL)
 		{
 			front = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
@@ -69,7 +69,7 @@ void ExtraFront(char input[],char back_img[])
 		}
 		cvAbsDiff(frame_medianMat, background_grayMat, frontMat);
 		cvConvert(frontMat, front);
-		// ¶ÔÇ°¾°½øĞĞ¶şÖµ»¯£¬Ëã·¨Îª¸Ä½øµÄOTSU 
+		// å¯¹å‰æ™¯è¿›è¡ŒäºŒå€¼åŒ–ï¼Œç®—æ³•ä¸ºæ”¹è¿›çš„OTSU 
 		if (front_bin == NULL)
 		{
 			front_bin = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
@@ -77,50 +77,50 @@ void ExtraFront(char input[],char back_img[])
 		}
 		int threshold = Otsu(front);
 		cvThreshold(front, front_bin, threshold, 255, CV_THRESH_BINARY); 
-		// ¶Ô¶şÖµ»¯ºóµÄÇ°¾°×ö¿ªÔËËã 
-		cvErode(front_bin, front_bin);	//¸¯Ê´,µü´ú´ÎÊı1
-		cvDilate(front_bin, front_bin);	//ÔÙÅòÕÍ,µü´ú´ÎÊı1
+		// å¯¹äºŒå€¼åŒ–åçš„å‰æ™¯åšå¼€è¿ç®— 
+		cvErode(front_bin, front_bin);	//è…èš€,è¿­ä»£æ¬¡æ•°1
+		cvDilate(front_bin, front_bin);	//å†è†¨èƒ€,è¿­ä»£æ¬¡æ•°1
 		cvConvert(front_bin, front_binMat);
-		// ¶Ô±³¾°½øĞĞ¸üĞÂ 
-		SurendraRenew(front_binMat, frame_medianMat, background_grayMat, background_renewMat);	//Surendra±³¾°¸üĞÂËã·¨
-		cvRunningAvg(background_renewMat, background_grayMat, 0.03, 0);		//½«±³¾°¸üĞÂÍ¼ÓëÔ­±³¾°½øĞĞ¼ÓÈ¨µş¼Ó£¬È¨ÖµÎª0.03
-		// ÏÔÊ¾µ±Ç°Ö¡ÒÔ¼°¶şÖµ»¯ºóµÄÇ°¾° 
+		// å¯¹èƒŒæ™¯è¿›è¡Œæ›´æ–° 
+		SurendraRenew(front_binMat, frame_medianMat, background_grayMat, background_renewMat);	//SurendraèƒŒæ™¯æ›´æ–°ç®—æ³•
+		cvRunningAvg(background_renewMat, background_grayMat, 0.03, 0);		//å°†èƒŒæ™¯æ›´æ–°å›¾ä¸åŸèƒŒæ™¯è¿›è¡ŒåŠ æƒå åŠ ï¼Œæƒå€¼ä¸º0.03
+		// æ˜¾ç¤ºå½“å‰å¸§ä»¥åŠäºŒå€¼åŒ–åçš„å‰æ™¯ 
 		cvShowImage("avi_input", frame);
 		cvShowImage("avi_output", front_bin);
 		frame_count++;
 		cvWriteFrame( wrVideo, front_bin);
-		char c1 = cvWaitKey(30);	//Ã¿Ö¡ÑÓÊ±30ms
-		//Èô°´ÏÂesc¼ü£¬½øĞĞÏà¹ØÍ¼Æ¬µÄ±£´æ£¬Èô°´ÏÂ»Ø³µ¼üÔòÖ±½ÓÍË³ö³ÌĞò 
+		char c1 = cvWaitKey(30);	//æ¯å¸§å»¶æ—¶30ms
+		//è‹¥æŒ‰ä¸‹escé”®ï¼Œè¿›è¡Œç›¸å…³å›¾ç‰‡çš„ä¿å­˜ï¼Œè‹¥æŒ‰ä¸‹å›è½¦é”®åˆ™ç›´æ¥é€€å‡ºç¨‹åº 
 		if (c1 == 27)
 		{
-			// ±£´æµ±Ç°Ö¡»Ò¶ÈÍ¼ 
+			// ä¿å­˜å½“å‰å¸§ç°åº¦å›¾ 
 			char savename_frame[50];
 			sprintf(savename_frame, "%s%d%s", "F:\\vs2005\\frame_gray_", frame_count, ".png");
 			cvSaveImage(savename_frame, frame_gray);
 			cvNamedWindow("frame_gray");
 			cvShowImage("frame_gray", frame_gray);
-			// ±£´æ¼õ¾°²Ù×÷½á¹û 
+			// ä¿å­˜å‡æ™¯æ“ä½œç»“æœ 
 			char savename_front[50];
 			sprintf(savename_front, "%s%d%s", "F:\\vs2005\\front_", frame_count, ".png");
 			cvSaveImage(savename_front, front);
 			cvNamedWindow("front");
 			cvShowImage("front", front);
-			// ±£´æ¶şÖµ»¯½á¹û 
+			// ä¿å­˜äºŒå€¼åŒ–ç»“æœ 
 			char savename_frontbin[50];
 			sprintf(savename_frontbin, "%s%d%s", "F:\\vs2005\\front_bin_", frame_count, ".png");
 			cvSaveImage(savename_frontbin, front_bin);
-			// ±£´æµ±Ç°±³¾° 
+			// ä¿å­˜å½“å‰èƒŒæ™¯ 
 			cvConvert(background_grayMat, background_gray);
 			char savename_background[50];
 			sprintf(savename_background, "%s%d%s", "F:\\vs2005\\background_", frame_count, ".png");
 			cvSaveImage(savename_background, background_gray);
 			cvNamedWindow("background");
 			cvShowImage("background", background_gray);
-			// Êä³öµ±Ç°Ö¡ÊıÒÔ¼°ãĞÖµ 
+			// è¾“å‡ºå½“å‰å¸§æ•°ä»¥åŠé˜ˆå€¼ 
 			printf("%s%d%s", "frames: ", frame_count, "	");
 			printf("%s%d\n", "threshold: ", threshold);
 
-			// µÈ´ı°´¼üÏìÓ¦£¬Èô°´ÏÂesc¼ü£¬Ôò¼ÌĞøÔËĞĞ³ÌĞò£¬·ñÔòÍË³ö³ÌĞò 
+			// ç­‰å¾…æŒ‰é”®å“åº”ï¼Œè‹¥æŒ‰ä¸‹escé”®ï¼Œåˆ™ç»§ç»­è¿è¡Œç¨‹åºï¼Œå¦åˆ™é€€å‡ºç¨‹åº 
 			char c2 = cvWaitKey(0);
 			if(c2 != 27)
 				break;

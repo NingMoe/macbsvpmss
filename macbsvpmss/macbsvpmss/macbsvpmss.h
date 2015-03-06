@@ -1,4 +1,4 @@
-#ifndef GUARD_macbsvpmss_h
+ï»¿#ifndef GUARD_macbsvpmss_h
 #define GUARD_macbsvpmss_h
 
 #include<opencv2/core/core.hpp>
@@ -11,16 +11,16 @@ struct tracedata
 	CvRect rect;
 	long num;
 };
-//±³¾°ÌáÈ¡
+//èƒŒæ™¯æå–
 IplImage* ExtractBackground(char input[],int k);
-//Ç°¾°ÌáÈ¡²¢¶şÖµ»¯
+//å‰æ™¯æå–å¹¶äºŒå€¼åŒ–
 void ExtraFront(char input[],char background[]);
-//Ñ¡ÖĞÄ¿±ê
+//é€‰ä¸­ç›®æ ‡
 void ExtraContours(char input[]);
-//Ç°¾°ÌáÈ¡µÄãĞÖµËã·¨
+//å‰æ™¯æå–çš„é˜ˆå€¼ç®—æ³•
 int Otsu(IplImage* src);
-//±³¾°¸üĞÂËã·¨
+//èƒŒæ™¯æ›´æ–°ç®—æ³•
 void SurendraRenew(CvMat* bin, CvMat* frame, CvMat* background, CvMat* background_renew);
-//ÂÖÀª¸üĞÂ
+//è½®å»“æ›´æ–°
 void UpdateContour(std::vector<tracedata>src,std::vector<tracedata> des);
 #endif

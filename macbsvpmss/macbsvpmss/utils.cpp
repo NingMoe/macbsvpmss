@@ -1,17 +1,17 @@
-/*
-	OtsuÓÃÓÚ¸¨ÖúÉú³É±³¾°¶şÖµ»¯µÄãĞÖµËã·¨
-	SurendraÓÃÓÚµü´ú¸üĞÂ±³¾°
-	ÕâÁ½¸öº¯ÊıÀ´×ÔÓÚ¸ßÔÆêÍÊ¦ĞÖ±ÏÒµÉè¼Æ
+ï»¿/*
+	Otsuç”¨äºè¾…åŠ©ç”ŸæˆèƒŒæ™¯äºŒå€¼åŒ–çš„é˜ˆå€¼ç®—æ³•
+	Surendraç”¨äºè¿­ä»£æ›´æ–°èƒŒæ™¯
+	è¿™ä¸¤ä¸ªå‡½æ•°æ¥è‡ªäºé«˜äº‘æ™–å¸ˆå…„æ¯•ä¸šè®¾è®¡
 */
 #include "macbsvpmss.h"
 
-//Ç°¾°ÌáÈ¡µÄãĞÖµËã·¨
+//å‰æ™¯æå–çš„é˜ˆå€¼ç®—æ³•
 int Otsu(IplImage* src)  
 {  
 	int height=src->height;  
 	int width=src->width;      
 
-	/* ½¨Á¢Í³¼ÆÖ±·½Í¼ */  
+	/* å»ºç«‹ç»Ÿè®¡ç›´æ–¹å›¾ */  
 	float histogram[256] = {0};  
 	for(int i=0; i < height; i++)
 	{  
@@ -21,18 +21,18 @@ int Otsu(IplImage* src)
 			histogram[*p++]++;  
 		}  
 	}  
-	/* ¶ÔÖ±·½Í¼½øĞĞ¹éÒ»»¯´¦Àí */ 
+	/* å¯¹ç›´æ–¹å›¾è¿›è¡Œå½’ä¸€åŒ–å¤„ç† */ 
 	int size = height * width;  
 	for(int i = 0; i < 256; i++)
 	{  
 		histogram[i] = histogram[i] / size;  
 	}  
 
-	/* ÇóµÃÕû·ùÍ¼ÏñµÄÆ½¾ù»Ò¶È */ 
+	/* æ±‚å¾—æ•´å¹…å›¾åƒçš„å¹³å‡ç°åº¦ */ 
 	float avgValue=0;  
 	for(int i=0; i < 256; i++)
 	{  
-		avgValue += i * histogram[i];  //Õû·ùÍ¼ÏñµÄÆ½¾ù»Ò¶È
+		avgValue += i * histogram[i];  //æ•´å¹…å›¾åƒçš„å¹³å‡ç°åº¦
 	}   
 
 	int threshold;    
@@ -40,8 +40,8 @@ int Otsu(IplImage* src)
 	float w = 0, u = 0;  
 	for(int i = 0; i < 256; i++) 
 	{  
-		w += histogram[i];  //¼ÙÉèµ±Ç°»Ò¶ÈiÎªãĞÖµ, 0~i »Ò¶ÈµÄÏñËØ(¼ÙÉèÏñËØÖµÔÚ´Ë·¶Î§µÄÏñËØ½Ğ×öÇ°¾°ÏñËØ) ËùÕ¼Õû·ùÍ¼ÏñµÄ±ÈÀı
-		u += i * histogram[i];  // »Ò¶Èi Ö®Ç°µÄÏñËØ(0~i)µÄÆ½¾ù»Ò¶ÈÖµ£º Ç°¾°ÏñËØµÄÆ½¾ù»Ò¶ÈÖµ
+		w += histogram[i];  //å‡è®¾å½“å‰ç°åº¦iä¸ºé˜ˆå€¼, 0~i ç°åº¦çš„åƒç´ (å‡è®¾åƒç´ å€¼åœ¨æ­¤èŒƒå›´çš„åƒç´ å«åšå‰æ™¯åƒç´ ) æ‰€å æ•´å¹…å›¾åƒçš„æ¯”ä¾‹
+		u += i * histogram[i];  // ç°åº¦i ä¹‹å‰çš„åƒç´ (0~i)çš„å¹³å‡ç°åº¦å€¼ï¼š å‰æ™¯åƒç´ çš„å¹³å‡ç°åº¦å€¼
 
 		float t = avgValue * w - u;  
 		float variance = t * t / (w * (1 - w) );  
@@ -51,17 +51,17 @@ int Otsu(IplImage* src)
 			threshold = i;  
 		}  
 	}
-	/* ¸Ä½øµÄµØ·½ */
+	/* æ”¹è¿›çš„åœ°æ–¹ */
 	if (threshold < 50)
 		threshold = 50;
 
 	return threshold;  
 } 
 
-// Surendra±³¾°¸üĞÂËã·¨
+// SurendraèƒŒæ™¯æ›´æ–°ç®—æ³•
 void SurendraRenew(CvMat* bin, CvMat* frame, CvMat* background, CvMat* background_renew)
 {
-	/* ´´½¨Ö¸ÏòCvMatÖĞÃ¿Ò»¸öÏñËØÖµµÄÖ¸Õë */
+	/* åˆ›å»ºæŒ‡å‘CvMatä¸­æ¯ä¸€ä¸ªåƒç´ å€¼çš„æŒ‡é’ˆ */
 	float* bin_float;
 	float* frame_float;
 	float* background_float;
@@ -71,7 +71,7 @@ void SurendraRenew(CvMat* bin, CvMat* frame, CvMat* background, CvMat* backgroun
 
 	for (y = 0; y < background_renew->rows; y++)
 	{
-		/* ÀûÓÃÑ­»·ÁîÖ¸ÕëÖ¸ÏòCvMatÖĞÃ¿Ò»ĞĞµÄ¿ªÍ·ÔªËØÎ»ÖÃ */
+		/* åˆ©ç”¨å¾ªç¯ä»¤æŒ‡é’ˆæŒ‡å‘CvMatä¸­æ¯ä¸€è¡Œçš„å¼€å¤´å…ƒç´ ä½ç½® */
 		bin_float = (float*)(bin->data.ptr + y * bin->step);
 		frame_float = (float*)(frame->data.ptr + y * frame->step);
 		background_float = (float*)(background->data.ptr + y * background->step);
@@ -79,7 +79,7 @@ void SurendraRenew(CvMat* bin, CvMat* frame, CvMat* background, CvMat* backgroun
 
 		for (x = 0; x < background_renew->cols; x++)
 		{
-			/* ¶ÔÔªËØÖµ½øĞĞ±È½ÏÅĞ¶Ï£¬ÊôÓÚ±³¾°µÄ²¿·Ö½«ÓÃµ±Ç°Ö¡¶ÔÓ¦ÏñËØÖµÌî³ä£¬ÊôÓÚÔË¶¯ÎïÌåµÄ²¿·Ö½«ÓÃÔ­±³¾°¶ÔÓ¦ÏñËØÖµÌî³ä */
+			/* å¯¹å…ƒç´ å€¼è¿›è¡Œæ¯”è¾ƒåˆ¤æ–­ï¼Œå±äºèƒŒæ™¯çš„éƒ¨åˆ†å°†ç”¨å½“å‰å¸§å¯¹åº”åƒç´ å€¼å¡«å……ï¼Œå±äºè¿åŠ¨ç‰©ä½“çš„éƒ¨åˆ†å°†ç”¨åŸèƒŒæ™¯å¯¹åº”åƒç´ å€¼å¡«å…… */
 			if (*(bin_float + x) == 0)
 				*(background_renew_float + x) = *(frame_float + x);
 			else

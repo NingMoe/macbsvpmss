@@ -1,52 +1,52 @@
-/*
-	¼ÆËã±³¾°µÄº¯Êı£¬»ù±¾ÒıÓÃ×Ô¸ßÔÆêÍÊ¦ĞÖµÄ±ÏÒµÉè¼Æ´úÂë
-	¼ÆËã¹«Ê½£ºbackImage = (1-learningRate)*background + learningRate*gray;
+ï»¿/*
+	è®¡ç®—èƒŒæ™¯çš„å‡½æ•°ï¼ŒåŸºæœ¬å¼•ç”¨è‡ªé«˜äº‘æ™–å¸ˆå…„çš„æ¯•ä¸šè®¾è®¡ä»£ç 
+	è®¡ç®—å…¬å¼ï¼šbackImage = (1-learningRate)*background + learningRate*gray;
 */
 #include "macbsvpmss.h"
 
 const int g_adj = 50;
 char g_savepath[] = "F:\\img_avg_gray_";
 
-//input[]´ú±íÊÓÆµµÄ¾ø¶ÔÂ·¾¶×Ö·û´®£¬kÓÃÓÚµÚK·ùÉú³ÉÎÄ¼şÃüÃû
-//·µ»ØÖµÊÇIplIamge*´æ´¢ÀàĞÍµÄ±³¾°Í¼
+//input[]ä»£è¡¨è§†é¢‘çš„ç»å¯¹è·¯å¾„å­—ç¬¦ä¸²ï¼Œkç”¨äºç¬¬Kå¹…ç”Ÿæˆæ–‡ä»¶å‘½å
+//è¿”å›å€¼æ˜¯IplIamge*å­˜å‚¨ç±»å‹çš„èƒŒæ™¯å›¾
 IplImage* ExtractBackground(char input[],int k)
 {
 
 	/**********************************************************	
 
-	ÊµÏÖ¹¦ÄÜ£º´ÓÊÓÆµÖĞ½ØÈ¡Á¬ĞøµÄ¶àÖ¡×ª»¯Îª»Ò¶ÈÍ¼ÏñÈ»ºóÇóÆ½¾ùÖµ	
+	å®ç°åŠŸèƒ½ï¼šä»è§†é¢‘ä¸­æˆªå–è¿ç»­çš„å¤šå¸§è½¬åŒ–ä¸ºç°åº¦å›¾åƒç„¶åæ±‚å¹³å‡å€¼	
 
 	*/
-	CvCapture* capture = cvCreateFileCapture(input);	//¶ÁÈëÊÓÆµ£¨ÔËĞĞÇ°Ğë±£Ö¤¸ÃÂ·¾¶ÏÂ´æÔÚ¸ÃÃû³ÆµÄÊÓÆµ£¬·ñÔò»á±¨´í£©
+	CvCapture* capture = cvCreateFileCapture(input);	//è¯»å…¥è§†é¢‘ï¼ˆè¿è¡Œå‰é¡»ä¿è¯è¯¥è·¯å¾„ä¸‹å­˜åœ¨è¯¥åç§°çš„è§†é¢‘ï¼Œå¦åˆ™ä¼šæŠ¥é”™ï¼‰
 
 	IplImage* frame = NULL;
 	IplImage* frame_gray = NULL;
 
 	CvMat* frame_grayMat = NULL;
 	CvMat* img_avgMat = NULL;
-	//Ëù½ØÈ¡µÄÖ¡µÄÆğÊ¼ºÍÖÕÖ¹Î»ÖÃ£¬µ±ËùÉè¶¨ÓÃÓÚÇóÆ½¾ùµÄÖ¡Êı½Ï´óÊ±³ÌĞòÔËĞĞÊ±¼ä¿ÉÄÜ»á½Ï³¤
+	//æ‰€æˆªå–çš„å¸§çš„èµ·å§‹å’Œç»ˆæ­¢ä½ç½®ï¼Œå½“æ‰€è®¾å®šç”¨äºæ±‚å¹³å‡çš„å¸§æ•°è¾ƒå¤§æ—¶ç¨‹åºè¿è¡Œæ—¶é—´å¯èƒ½ä¼šè¾ƒé•¿
 	int start = g_adj;
-	cvSetCaptureProperty(capture, CV_CAP_PROP_POS_FRAMES, start);	//½«ÊÓÆµÖ¡µÄÎ»ÖÃµ÷µ½ËùÉèµÄÎ»ÖÃ
+	cvSetCaptureProperty(capture, CV_CAP_PROP_POS_FRAMES, start);	//å°†è§†é¢‘å¸§çš„ä½ç½®è°ƒåˆ°æ‰€è®¾çš„ä½ç½®
 	int end = cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_COUNT) - g_adj;
 	int count = start;
 
 	while (cvGrabFrame(capture) && (count <= end))
 	{
-		frame = cvRetrieveFrame(capture);	//»ñÈ¡µ±Ç°Ö¡
+		frame = cvRetrieveFrame(capture);	//è·å–å½“å‰å¸§
 
 		if (frame_gray == NULL)
 		{
 			frame_gray = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
 			cvZero(frame_gray);
 		}
-		cvCvtColor(frame, frame_gray, CV_BGR2GRAY);		//½«µ±Ç°Ö¡×ª³É»Ò¶ÈÍ¼
+		cvCvtColor(frame, frame_gray, CV_BGR2GRAY);		//å°†å½“å‰å¸§è½¬æˆç°åº¦å›¾
 
 		if (frame_grayMat == NULL)
 		{
 			frame_grayMat = cvCreateMat(frame -> height, frame -> width, CV_32FC1);
 			cvZero(frame_grayMat);
 		}
-		cvConvert(frame_gray, frame_grayMat);		//½«»Ò¶ÈÍ¼×ª»¯Îª32Î»¸¡µãÊıÔªËØµÄ¾ØÕó¸ñÊ½ÒÔ·½±ã¼ÆËã
+		cvConvert(frame_gray, frame_grayMat);		//å°†ç°åº¦å›¾è½¬åŒ–ä¸º32ä½æµ®ç‚¹æ•°å…ƒç´ çš„çŸ©é˜µæ ¼å¼ä»¥æ–¹ä¾¿è®¡ç®—
 
 		if (img_avgMat == NULL)
 		{
@@ -54,23 +54,23 @@ IplImage* ExtractBackground(char input[],int k)
 			cvZero(img_avgMat);
 		}
 		float learning = 1.0 / (float)(end - start + 1);
-		cvAddWeighted(img_avgMat, 1-learning, frame_grayMat, learning, 0, img_avgMat);	//½«»Ò¶ÈÍ¼°´Æ½¾ùÊıµÄÈ¨Öµ½øĞĞµş¼Ó£¬¼´ÇóÆ½¾ù
+		cvAddWeighted(img_avgMat, 1-learning, frame_grayMat, learning, 0, img_avgMat);	//å°†ç°åº¦å›¾æŒ‰å¹³å‡æ•°çš„æƒå€¼è¿›è¡Œå åŠ ï¼Œå³æ±‚å¹³å‡
 
 		count++;
 
 	}
 
-	IplImage* img_avg = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);	//½«»Ò¶ÈÍ¼´Ó¾ØÕó¸ñÊ½×ª»ØÍ¼Ïñ¸ñÊ½
+	IplImage* img_avg = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);	//å°†ç°åº¦å›¾ä»çŸ©é˜µæ ¼å¼è½¬å›å›¾åƒæ ¼å¼
 	cvConvert(img_avgMat, img_avg);		
-	// ÏÔÊ¾¸Ã»Ò¶ÈÍ¼ 
+	// æ˜¾ç¤ºè¯¥ç°åº¦å›¾ 
 	cvNamedWindow("img_avg_gray", CV_WINDOW_AUTOSIZE);
 	cvShowImage("img_avg_gray", img_avg);
-	//±£´æ¸Ã»Ò¶ÈÍ¼ 
+	//ä¿å­˜è¯¥ç°åº¦å›¾ 
 	char savename[50];
 	sprintf(savename, "%s%d%d%s%d%s", g_savepath, k,start, "_to_", end, ".png");
 	cvSaveImage(savename, img_avg);
 
-	cvWaitKey(0);	//°´ÈÎÒâ¼ü½áÊø³ÌĞò
+	cvWaitKey(0);	//æŒ‰ä»»æ„é”®ç»“æŸç¨‹åº
 
 	cvReleaseCapture(&capture);
 	cvDestroyAllWindows();

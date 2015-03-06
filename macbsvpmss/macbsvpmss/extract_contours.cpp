@@ -1,10 +1,10 @@
-/*
-	ÌáÈ¡ÂÖÀª²¢ÓÃ¾ØÐÎÈ¦³öÄ¿±êÂÖÀªµÄº¯Êý
-	¸Ãº¯ÊýÓÐ´ýÀ©Õ¹ÎªÁ¬ÐøÖ¡ÂÖÀªµÄ×·×Ù
+ï»¿/*
+	æå–è½®å»“å¹¶ç”¨çŸ©å½¢åœˆå‡ºç›®æ ‡è½®å»“çš„å‡½æ•°
+	è¯¥å‡½æ•°æœ‰å¾…æ‰©å±•ä¸ºè¿žç»­å¸§è½®å»“çš„è¿½è¸ª
 */
 #include "macbsvpmss.h"
 
-//input´ú±í±³¾°Í¼Æ¬µÄ¾ø¶ÔÂ·¾¶×Ö·û´®
+//inputä»£è¡¨èƒŒæ™¯å›¾ç‰‡çš„ç»å¯¹è·¯å¾„å­—ç¬¦ä¸²
 void ExtraContours(char input[])
 {
 	IplImage* test_gray = cvLoadImage(input,0);
@@ -14,18 +14,18 @@ void ExtraContours(char input[])
 	cvNamedWindow("test");
 	cvShowImage("test",test_gray);
 	cvWaitKey(0);
-	//Ä¬ÈÏ£ºmode=CV_RETR_LIST£¬¼ìË÷ËùÅ¼ÂÖÀª
+	//é»˜è®¤ï¼šmode=CV_RETR_LISTï¼Œæ£€ç´¢æ‰€å¶è½®å»“
 	int cnt = cvFindContours(test_gray,ms,&seq,sizeof(CvContour),2);
 	for(;seq;seq=seq->h_next)
 	{
-		//µ±Ç°ÂÖÀª°üº¬¶àÉÙ¸öÔªËØ£¬ÕâÀïµÄÔªËØÎªµã
+		//å½“å‰è½®å»“åŒ…å«å¤šå°‘ä¸ªå…ƒç´ ï¼Œè¿™é‡Œçš„å…ƒç´ ä¸ºç‚¹
 		int c=seq->total;
-		 //µÃµ½Ö¸¶¨µÄÄÇ¸öÂÖÀªµÄÖÜ³¤
+		 //å¾—åˆ°æŒ‡å®šçš„é‚£ä¸ªè½®å»“çš„å‘¨é•¿
 		double length = cvArcLength(seq);
-		//¸Ãº¯ÊýÓÐ3¸ö²ÎÊý£ºÐòÁÐ£¬Æðµã£¨Ä¬ÈÏ¼ÆËãÕûÌõÇúÏß£©£¬ÊÇ·ñ·â±ÕÇúÏß
-		double area = cvContourArea(seq);  //µÃµ½Ö¸¶¨µÄÄÇ¸öÂÖÀªµÄÃæ»ý
-		CvRect rect = cvBoundingRect(seq,1);  //¸ù¾ÝÐòÁÐ£¬·µ»ØÂÖÀªÍâÎ§¾ØÐÎ£»
-		CvBox2D box = cvMinAreaRect2(seq,NULL); //×îÐ¡ÍâÎ§¾ØÐÎ 
+		//è¯¥å‡½æ•°æœ‰3ä¸ªå‚æ•°ï¼šåºåˆ—ï¼Œèµ·ç‚¹ï¼ˆé»˜è®¤è®¡ç®—æ•´æ¡æ›²çº¿ï¼‰ï¼Œæ˜¯å¦å°é—­æ›²çº¿
+		double area = cvContourArea(seq);  //å¾—åˆ°æŒ‡å®šçš„é‚£ä¸ªè½®å»“çš„é¢ç§¯
+		CvRect rect = cvBoundingRect(seq,1);  //æ ¹æ®åºåˆ—ï¼Œè¿”å›žè½®å»“å¤–å›´çŸ©å½¢ï¼›
+		CvBox2D box = cvMinAreaRect2(seq,NULL); //æœ€å°å¤–å›´çŸ©å½¢ 
 
 		std::cout<<"Length = "<<length<<std::endl;  
 		std::cout<<"Area = "<<area<<std::endl;  
@@ -37,8 +37,8 @@ void ExtraContours(char input[])
 		pt2.x=rect.x+rect.width;
 		pt2.y=rect.y+rect.height;
 
-		//´´½¨Ò»¸ö´æ´¢Ä¿±êÍ¼ÏñµÄÄÚ´æ
-		IplImage *dst = cvCreateImage(cvGetSize(test_gray),8,3); //Ä¿±êÍ¼ÏñÎª3Í¨µÀÍ¼
+		//åˆ›å»ºä¸€ä¸ªå­˜å‚¨ç›®æ ‡å›¾åƒçš„å†…å­˜
+		IplImage *dst = cvCreateImage(cvGetSize(test_gray),8,3); //ç›®æ ‡å›¾åƒä¸º3é€šé“å›¾
 		cvZero(dst);  
 		cvDrawContours(dst,seq,CV_RGB(255,255,255),CV_RGB(0,0,0),0);  
 		cvRectangle(dst,pt1,pt2,CV_RGB(0,255,0)); 
