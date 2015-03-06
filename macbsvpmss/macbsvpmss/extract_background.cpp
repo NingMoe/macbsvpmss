@@ -27,7 +27,7 @@ IplImage* ExtractBackground(char input[],int k)
 	//所截取的帧的起始和终止位置，当所设定用于求平均的帧数较大时程序运行时间可能会较长
 	int start = g_adj;
 	cvSetCaptureProperty(capture, CV_CAP_PROP_POS_FRAMES, start);	//将视频帧的位置调到所设的位置
-	int end = cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_COUNT) - adj;
+	int end = cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_COUNT) - g_adj;
 	int count = start;
 
 	while (cvGrabFrame(capture) && (count <= end))

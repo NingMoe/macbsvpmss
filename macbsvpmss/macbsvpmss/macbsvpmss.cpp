@@ -9,7 +9,7 @@ int main(int argc,char **argv)
 	IplImage* img_avg;
 	char src[205];
 	strcpy(src,argv[1]);
-    extractBackground(src,0);
-//	extraFront();
-//	extraContours();
+    ExtractBackground(src,0);
+//	ExtraFront();
+//	ExtraContours();
 }
