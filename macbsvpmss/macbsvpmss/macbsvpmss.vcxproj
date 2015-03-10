@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="detect_mobile.cpp" />
     <ClCompile Include="extract_background.cpp" />
     <ClCompile Include="extract_contours.cpp" />
     <ClCompile Include="extract_front.cpp" />

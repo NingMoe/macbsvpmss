@@ -2,7 +2,9 @@
 	Otsu用于辅助生成背景二值化的阈值算法
 	Surendra用于迭代更新背景
 	这两个函数来自于高云晖师兄毕业设计
+	RatioAdjust用于增强对比度
 */
+
 #include "macbsvpmss.h"
 
 //前景提取的阈值算法
@@ -86,4 +88,15 @@ void SurendraRenew(CvMat* bin, CvMat* frame, CvMat* background, CvMat* backgroun
 				*(background_renew_float + x) = *(background_float + x);
 		}
 	}
+}
+//增强对比度
+void RatioAdjust(IplImage* src,IplImage* dst){
+	double minValue;
+	double maxValue;
+	cvMinMaxLoc(src,&minValue,&maxValue);
+	if(maxValue-minValue<1e-10){
+		cvZero(dst);
+		return;
+	}
+	cvConvertScale(src,dst,255.0/(maxValue-minValue),-255.0*minValue/(maxValue-minValue));
 }

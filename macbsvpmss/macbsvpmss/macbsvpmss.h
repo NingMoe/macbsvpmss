@@ -11,16 +11,21 @@ struct tracedata
 	CvRect rect;
 	long num;
 };
+
 //背景提取
-IplImage* ExtractBackground(char input[],int k);
+IplImage* ExtractBackground(char*,int,int );
 //前景提取并二值化
-void ExtraFront(char input[],char background[]);
+void ExtraFront(IplImage*,IplImage*,IplImage*);
 //选中目标
-void ExtraContours(char input[]);
+void ExtractContours(IplImage*,IplImage*);
 //前景提取的阈值算法
-int Otsu(IplImage* src);
+int Otsu(IplImage* );
 //背景更新算法
-void SurendraRenew(CvMat* bin, CvMat* frame, CvMat* background, CvMat* background_renew);
+void SurendraRenew(CvMat*, CvMat*, CvMat*, CvMat*);
 //轮廓更新
-void UpdateContour(std::vector<tracedata>src,std::vector<tracedata> des);
+void UpdateContour(std::vector<tracedata>,std::vector<tracedata>);
+//增强对比度
+void RatioAdjust(IplImage*,IplImage*);
+//锁定车辆
+void MobileDectect(char*,char*);
 #endif
