@@ -17,12 +17,29 @@ char video[][100] ={
 	"F:\\vs2005\\carDet\\IPMS-Test-Data\\791828_5.avi",
 	"F:\\vs2005\\carDet\\IPMS-Test-Data\\791828_8.avi",
 };
+//第一个参数是视频路径，第二个参数是背景图片路径
 int main(int argc,char **argv)
 {
 	int start;
 	int end;
-	std::cout<<"input start and end:"<<std::endl;
-	std::cin>>start;
-	ExtractBackground(argv[2],start,end);
-	//MobileDectect(argv[1],argv[2]);
+	int opration = 0;
+	std::cout<<"选择你的操作:\n1.背景提取. 2.车辆跟踪"<<std::endl;
+	while(opration != 1 && opration != 2)
+	{
+		std::cin>>opration;
+	}
+	switch(opration)
+	{
+	case 1:
+		std::cout<<"输入开始帧和结束帧:"<<std::endl;
+		std::cin>>start>>end;
+		ExtractBackground(argv[1],start,end);
+		break;
+	case 2:
+		MobileDectect(argv[1],argv[2]);
+		break;
+	default:break;
+	}
+	
+	
 }
