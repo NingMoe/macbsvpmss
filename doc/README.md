@@ -25,3 +25,4 @@ windows下markdown编辑器常用markdownpad, 随便搜索下载即可.
 - opencv配置.md: opencv的配置以及环境变量的配置
 - 编码规范.md: 编码规范, 花括号独占一行!
 - opencv项目配置: 描述如何导入opencv.props
+- 步骤概览: 写大创申请书参考用
