@@ -54,8 +54,8 @@ int Otsu(IplImage* src)
 		}  
 	}
 	/* 改进的地方 */
-	if (threshold < 50)
-		threshold = 50;
+	if (threshold < 30)
+		threshold = 30;
 
 	return threshold;  
 } 
@@ -99,4 +99,12 @@ void RatioAdjust(IplImage* src,IplImage* dst){
 		return;
 	}
 	cvConvertScale(src,dst,255.0/(maxValue-minValue),-255.0*minValue/(maxValue-minValue));
+}
+//用于返回外接矩形中心的辅助函数
+center GetCenter(CvRect rect)
+{
+	center point;
+	point.x = rect.x+rect.width/2;
+	point.y = rect.y+rect.height/2;
+	return point;
 }
