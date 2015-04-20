@@ -4,20 +4,23 @@
 */
 #include "macbsvpmss.h"
 
+using namespace std;
 //矩形过滤面积
-const int CONTOUR_MAX_AERA = 30000;
+const int CONTOUR_MAX_AERA = 20000;
+
 
 //test_gray表示需要寻找轮廓的灰度图
 //out表示画好矩形的输出图
-void ExtractContours(IplImage* test_gray,IplImage* out){
+void ExtractContours(IplImage* test_gray,IplImage* out,vector<tracedata>& t_rect)
+{
+	vector<tracedata> tmp_rect;
 	CvMemStorage *ms = cvCreateMemStorage();
 	CvSeq *seq = NULL;  
 	/*cvNamedWindow("test");
 	cvShowImage("test",test_gray);
 	cvWaitKey(0);*/
 
-
-	int cnt = cvFindContours(test_gray,ms,&seq,sizeof(CvContour),2);// // //默认：mode=CV_RETR_LIST，检索所偶轮廓
+	int cnt = cvFindContours(test_gray,ms,&seq,sizeof(CvContour),CV_RETR_LIST,CV_CHAIN_APPROX_SIMPLE);
 	for(;seq;seq=seq->h_next)
 	{
 		int c=seq->total;//当前轮廓包含多少个元素，这里的元素为点
@@ -35,8 +38,29 @@ void ExtractContours(IplImage* test_gray,IplImage* out){
 
 			cvRectangle( out, cvPoint(r.x,r.y), 
 			cvPoint(r.x + r.width, r.y + r.height), 
-			CV_RGB(255,0,0), 1, CV_AA,0); 
+			CV_RGB(255,0,0), 1, CV_AA,0);
+			tracedata tmp;
+			tmp.rect = r;
+			tmp.num = 1;
+			tmp_rect.push_back(tmp);
+			
 		}
+		/*cout<<"r.x:="<<r.x<<" r.y:="<<r.y<<endl;*/
+		
+	}
+	UpdateContour(tmp_rect,t_rect);
+	char buf[32];
+	CvFont font; 
+
+	cvInitFont(&font,CV_FONT_HERSHEY_COMPLEX, 0.5, 0.5, 1, 2, 8); 
+	for(vector<tracedata>::iterator it = t_rect.begin();it != t_rect.end();it ++){
+		if(it->exist==false)
+		{
+			continue;
+		}
+		cvPutText(out,_itoa(it->id,buf,10),cvPoint(GetCenter(it->rect).x,GetCenter(it->rect).y),&font, CV_RGB(255,0,0));
+		//cv::putText( out, it->id, Point(GetCenter(it->rect).x,GetCenter(it->rect).y),CV_FONT_HERSHEY_COMPLEX, 1, Scalar(255, 0, 0) ); 
+		cout<<"center:"<<GetCenter(it->rect).x<<" , "<<GetCenter(it->rect).y<<"id:"<<it->id<<endl;
 	}
 	cvReleaseMemStorage(&ms);  
 }

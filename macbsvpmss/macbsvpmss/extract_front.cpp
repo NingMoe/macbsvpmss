@@ -36,12 +36,14 @@ void ExtraFront(IplImage* frame,IplImage* front_bin ,IplImage* background){
 		frame_medianMat = cvCreateMat(frame -> height, frame -> width, CV_32FC1);
 	}
 	CvSize size = cvSize(frame->width,frame->height); // get current frame size，得到当前帧的尺寸 
-	IplImage*pyr= cvCreateImage( cvSize((size.width & -2)/2, (size.height & -2)/2), 8, 1 );;
 	cvSmooth(frame_gray, frame_median, CV_MEDIAN);	//默认为3*3的掩膜
-
-	//cvPyrDown(frame_gray, pyr, CV_GAUSSIAN_5x5 );// 向下采样，去掉噪声，图像是原图像的四分之一 
+	/*float k[9] = {0,-1,0,-1,5,-1,0,-1,0};
+	CvMat km = cvMat(3,3,CV_32FC1,k);
+	cvFilter2D(frame_median,frame_median,&km);*/
+	IplImage*pyr= cvCreateImage( cvSize((size.width & -2)/2, (size.height & -2)/2), 8, 1 );
+	cvPyrDown(frame_median, pyr, CV_GAUSSIAN_5x5 );// 向下采样，去掉噪声，图像是原图像的四分之一 
 	//cvDilate( pyr, pyr, 0, 1 ); // 做膨胀操作，消除目标的不连续空洞 
-	//cvPyrUp( pyr, frame_gray, CV_GAUSSIAN_5x5 );// 向上采样，恢复图像，图像是原图像的四倍 
+	cvPyrUp( pyr, frame_median, CV_GAUSSIAN_5x5 );// 向上采样，恢复图像，图像是原图像的四倍 
 
 	cvConvert(frame_median, frame_medianMat);
 	// 进行减景操作得到前景 
@@ -58,13 +60,12 @@ void ExtraFront(IplImage* frame,IplImage* front_bin ,IplImage* background){
 		front_binMat = cvCreateMat(frame -> height, frame -> width, CV_32FC1);
 	}
 	int threshold = Otsu(front);
-	printf("\n*threshold:%d*\n",threshold);
+	//printf("\n*threshold:%d*\n",threshold);
 	cvThreshold(front, front_bin, threshold, 255, CV_THRESH_BINARY); 
 	// 对二值化后的前景做开运算 
 	cvErode(front_bin, front_bin);	//腐蚀,迭代次数1
 	cvSmooth( front_bin, front_bin, CV_MEDIAN, 3, 0, 0, 0 ); 
 	cvConvert(front_bin, front_binMat);
-
 	cvReleaseMat(&background_grayMat);
 	cvReleaseMat(&background_renewMat);
 	cvReleaseImage(&frame_gray);

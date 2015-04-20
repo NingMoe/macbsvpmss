@@ -10,22 +10,29 @@ struct tracedata
 {
 	CvRect rect;
 	long num;
+	int id;
+	bool exist;
 };
+struct center{
+	double x;
+	double y;
+};
+center GetCenter(CvRect rect);
 
 //背景提取
 IplImage* ExtractBackground(char*,int,int );
 //前景提取并二值化
 void ExtraFront(IplImage*,IplImage*,IplImage*);
 //选中目标
-void ExtractContours(IplImage*,IplImage*);
+void ExtractContours(IplImage*,IplImage*,std::vector<tracedata>&);
 //前景提取的阈值算法
 int Otsu(IplImage* );
 //背景更新算法
 void SurendraRenew(CvMat*, CvMat*, CvMat*, CvMat*);
 //轮廓更新
-void UpdateContour(std::vector<tracedata>,std::vector<tracedata>);
+void UpdateContour(std::vector<tracedata>&,std::vector<tracedata>&);
 //增强对比度
 void RatioAdjust(IplImage*,IplImage*);
-//锁定车辆
-void MobileDectect(char*,char*);
+//锁定车
+void MobileDectect(char*,char*,std::vector<tracedata>&);
 #endif

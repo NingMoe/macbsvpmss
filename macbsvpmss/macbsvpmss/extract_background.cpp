@@ -63,6 +63,6 @@ IplImage* ExtractBackground(char input[],int start,int end)
 	//保存该灰度图 
 	char savename[50];
 	sprintf(savename, "%s%d%s%d%s", savepath,start, "_to_", end, ".png");
-	//cvSaveImage(savename, img_avg);
+	cvSaveImage(savename, img_avg);
 	return img_avg;
 }

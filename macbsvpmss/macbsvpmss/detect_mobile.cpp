@@ -1,9 +1,11 @@
 ﻿#include "macbsvpmss.h"
-void MobileDectect(char video[],char* back_img)
+using namespace std;
+void MobileDectect(char video[],char* back_img,vector<tracedata>&t_rect )
 {
 	int b_start = 20;
 	int b_end = 50;
 	CvCapture* capture = cvCreateFileCapture(video);
+	//cvSetCaptureProperty(capture,CV_CAP_PROP_POS_FRAMES,700000);
 	int start = 0;
 	int count = cvGetCaptureProperty(capture,CV_CAP_PROP_FRAME_COUNT);
 	IplImage* frame = NULL;
@@ -25,7 +27,7 @@ void MobileDectect(char video[],char* back_img)
 		frame_binary = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
 		cvCvtColor(frame,frame_gray,CV_BGR2GRAY);
 		ExtraFront(frame,frame_binary,background);
-		ExtractContours(frame_binary,frame);
+		ExtractContours(frame_binary,frame,t_rect);
 		cvShowImage("background",frame);
 		if( cvWaitKey(10) >= 0 )//10ms中按任意键退出 
 			break; 
