@@ -18,7 +18,6 @@ void UpdateContour(vector<tracedata>& src,vector<tracedata>& des)
 	bool flag ;
 	for(vector<tracedata>::iterator it=des.begin();it!=des.end();++it)
 	{
-
 		it->exist=false;
 	}
 	for(vector<tracedata>::iterator itSrc = src.begin();itSrc != src.end();itSrc ++)

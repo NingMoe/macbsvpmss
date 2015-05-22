@@ -1,6 +1,10 @@
 ﻿#ifndef GUARD_macbsvpmss_h
 #define GUARD_macbsvpmss_h
 
+#include<cxcore.h>
+#include<highgui.h>
+#include<cvaux.h>
+
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include <opencv/cv.hpp>
@@ -35,4 +39,5 @@ void UpdateContour(std::vector<tracedata>&,std::vector<tracedata>&);
 void RatioAdjust(IplImage*,IplImage*);
 //锁定车
 void MobileDectect(char*,char*,std::vector<tracedata>&);
+void GmmExtraFront(IplImage* frame,IplImage* front_bin);
 #endif

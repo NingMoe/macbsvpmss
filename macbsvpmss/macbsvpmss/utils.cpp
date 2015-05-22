@@ -4,7 +4,9 @@
 	这两个函数来自于高云晖师兄毕业设计
 	RatioAdjust用于增强对比度
 */
-
+#include<cv.h>
+#include<highgui.h>
+#include<cxcore.h>
 #include "macbsvpmss.h"
 
 //前景提取的阈值算法
@@ -107,4 +109,16 @@ center GetCenter(CvRect rect)
 	point.x = rect.x+rect.width/2;
 	point.y = rect.y+rect.height/2;
 	return point;
+}
+
+//每調用一次由攝像頭返回一幀
+IplImage* GetCamFrame()
+{
+	static	CvCapture* capture = cvCreateCameraCapture(CV_CAP_ANY);
+	//CvCapture* capture = cvCaptureFromCAM(0);
+	IplImage* frame = cvQueryFrame(capture);   
+	//沒了cvWaitkey()就會返回不正常的幀 
+	cvWaitKey(1);
+	//cvReleaseCapture(&capture);
+	return frame;
 }
