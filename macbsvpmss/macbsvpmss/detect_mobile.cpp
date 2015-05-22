@@ -27,7 +27,7 @@ void MobileDectect(char video[],char* back_img,vector<tracedata>&t_rect )
 		frame_binary = cvCreateImage(cvGetSize(frame), IPL_DEPTH_8U, 1);
 		cvCvtColor(frame,frame_gray,CV_BGR2GRAY);
 		//ExtraFront(frame,frame_binary,background);
-		GmmExtraFront(frame,frame_binary);
+		GmmExtraFront(frame_gray,frame_binary);
 		ExtractContours(frame_binary,frame,t_rect);
 		cvShowImage("background",frame);
 		if( cvWaitKey(10) >= 0 )//10ms中按任意键退出 

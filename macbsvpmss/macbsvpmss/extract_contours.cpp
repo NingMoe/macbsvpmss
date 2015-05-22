@@ -6,7 +6,7 @@
 
 using namespace std;
 //矩形过滤面积
-const int CONTOUR_MAX_AERA = 20000;
+const int CONTOUR_MAX_AERA = 200;
 
 
 //test_gray表示需要寻找轮廓的灰度图
