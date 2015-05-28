@@ -15,6 +15,7 @@
     <ClCompile Include="extract_background.cpp" />
     <ClCompile Include="extract_contours.cpp" />
     <ClCompile Include="extract_front.cpp" />
+    <ClCompile Include="gmm_extract_front.cpp" />
     <ClCompile Include="macbsvpmss.cpp" />
     <ClCompile Include="update_contours.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -31,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

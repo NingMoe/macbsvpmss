@@ -4,7 +4,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 void GmmExtraFront(IplImage* frame,IplImage* front_bin){
-	IplImage* background = cvCreateImage(cvSize(frame->width,frame->height),IPL_DEPTH_8U, 1);
+	IplImage* background;
 	cv::BackgroundSubtractorMOG2 mog(530,4,true);
 	cv::Mat mat_gray(frame);
 	cv::Mat mat_front(front_bin);
@@ -21,4 +21,18 @@ void GmmExtraFront(IplImage* frame,IplImage* front_bin){
 	cvShowImage("front",front_bin);
 	/*cvNamedWindow("front");
 	cvShowImage("front",front_bin);*/
+}
+void GmmExtraFront(IplImage* frame,IplImage* front_bin,IplImage* background){
+	cv::Mat backgroundMat;
+	cv::BackgroundSubtractorMOG mog(530,4,true);
+	cv::Mat mat_gray(frame);
+	cv::Mat mat_front(front_bin);
+	mog(mat_gray,mat_front,0.01);
+	mog.getBackgroundImage(backgroundMat);
+	IplImage tmp = mat_front;
+	//background = cvCloneImage(&tmp);
+	front_bin = cvCloneImage(&tmp);
+	// 对二值化后的前景做开运算 
+	cvNamedWindow("front");
+	cvShowImage("front",front_bin);
 }

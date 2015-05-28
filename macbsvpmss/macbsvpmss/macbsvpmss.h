@@ -40,4 +40,6 @@ void RatioAdjust(IplImage*,IplImage*);
 //锁定车
 void MobileDectect(char*,char*,std::vector<tracedata>&);
 void GmmExtraFront(IplImage* frame,IplImage* front_bin);
+void GmmExtraFront(IplImage* frame,IplImage* front_bin,IplImage* background);
+IplImage* GetCamFrame(CvCapture* );
 #endif

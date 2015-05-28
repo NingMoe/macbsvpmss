@@ -112,9 +112,9 @@ center GetCenter(CvRect rect)
 }
 
 //每調用一次由攝像頭返回一幀
-IplImage* GetCamFrame()
+IplImage* GetCamFrame(CvCapture* capture)
 {
-	static	CvCapture* capture = cvCreateCameraCapture(CV_CAP_ANY);
+
 	//CvCapture* capture = cvCaptureFromCAM(0);
 	IplImage* frame = cvQueryFrame(capture);   
 	//沒了cvWaitkey()就會返回不正常的幀 

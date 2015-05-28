@@ -36,6 +36,9 @@
     <ClCompile Include="detect_mobile.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="gmm_extract_front.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="macbsvpmss.h">
